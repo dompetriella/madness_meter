@@ -2,12 +2,13 @@
   import StatsInput from "./lib/StatsInput.svelte";
   import Meter from "./lib/Meter.svelte";
   import SpellButton from "./lib/SpellButton.svelte";
+  import { intScore, wisScore } from "./lib/stores";
 </script>
 
 <main>
   <div class="stats-input">
-    <StatsInput name={"INT"} />
-    <StatsInput name={"WIS"} />
+    <StatsInput name={"INT"} score={$intScore} />
+    <StatsInput name={"WIS"} score={$wisScore} />
   </div>
   <div class="meter">
     <Meter />

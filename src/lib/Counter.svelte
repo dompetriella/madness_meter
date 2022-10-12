@@ -1,10 +1,11 @@
-<script>
-  export let text;
-  export let increase;
+<script lang="ts">
+  import { currentMeter } from "./stores";
+  export let text: string;
+  export let increase: boolean;
 
   function counterClick() {
-    if (increase) return console.log("increase");
-    console.log("decrease");
+    if (increase) return $currentMeter++;
+    if ($currentMeter > 0) $currentMeter--;
   }
 </script>
 

@@ -1,8 +1,32 @@
 <script>
   import Counter from "./Counter.svelte";
+  import { currentMeter, intScore, wisScore } from "./stores";
+
+  function getModifier(baseMod) {
+    if (baseMod == 1) return -5;
+    if (baseMod > 1) return -4;
+    if (baseMod > 3) return -3;
+    if (baseMod > 5) return -2;
+    if (baseMod > 7) return -1;
+    if (baseMod > 9) return 0;
+    if (baseMod > 11) return 1;
+    if (baseMod > 13) return 2;
+    if (baseMod > 15) return 3;
+    if (baseMod > 17) return 4;
+    if (baseMod > 21) return 5;
+    if (baseMod > 23) return 6;
+    if (baseMod > 25) return 7;
+    if (baseMod > 27) return 8;
+    if (baseMod > 29) return 9;
+    return 10;
+  }
 </script>
 
-<div class="meter-progress">0/10</div>
+<div class="meter-progress">
+  {$currentMeter > $intScore + $wisScore + 5
+    ? "MADNESS"
+    : `${$currentMeter}/${getModifier($intScore) + getModifier($wisScore) + 5}`}
+</div>
 <div class="meter-area">
   <Counter text={"-"} increase={false} />
   <div class="meter-outline">
@@ -89,6 +113,19 @@
     border-radius: 50%;
     z-index: 1;
     box-shadow: 0px 0px 50px 0px lightskyblue;
+    animation: skullGlow 4s reverse infinite;
     /* increase last number for intensity */
+  }
+
+  @keyframes skullGlow {
+    0% {
+      box-shadow: 0px 0px 50px 0px lightskyblue;
+    }
+    50% {
+      box-shadow: 0px 0px 50px 20px lightskyblue;
+    }
+    100% {
+      box-shadow: 0px 0px 50px 0px lightskyblue;
+    }
   }
 </style>
