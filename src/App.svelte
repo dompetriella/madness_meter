@@ -7,8 +7,8 @@
 
 <main>
   <div class="stats-input">
-    <StatsInput name={"INT"} score={$intScore} />
-    <StatsInput name={"WIS"} score={$wisScore} />
+    <StatsInput name={"INT"} bind:value={$intScore} />
+    <StatsInput name={"WIS"} bind:value={$wisScore} />
   </div>
   <div class="meter">
     <Meter />

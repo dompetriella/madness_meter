@@ -1,11 +1,12 @@
-<script>
-  export let name;
-  export let score;
+<script lang="ts">
+  import { intScore, wisScore } from "./stores";
+  export let name: string;
+  export let value: number;
 </script>
 
 <div class="statsInputArea">
   <div class="name">{name}</div>
-  <input type="text" bind:value={score} />
+  <input bind:value />
 </div>
 
 <style>

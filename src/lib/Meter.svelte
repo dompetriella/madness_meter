@@ -1,37 +1,37 @@
-<script>
+<script lang="ts">
   import Counter from "./Counter.svelte";
-  import { currentMeter, intScore, wisScore } from "./stores";
+  import { currentMeter, totalMeter, intScore, wisScore } from "./stores";
 
-  function getModifier(baseMod) {
-    if (baseMod == 1) return -5;
-    if (baseMod > 1) return -4;
-    if (baseMod > 3) return -3;
-    if (baseMod > 5) return -2;
-    if (baseMod > 7) return -1;
-    if (baseMod > 9) return 0;
-    if (baseMod > 11) return 1;
-    if (baseMod > 13) return 2;
-    if (baseMod > 15) return 3;
-    if (baseMod > 17) return 4;
-    if (baseMod > 21) return 5;
-    if (baseMod > 23) return 6;
-    if (baseMod > 25) return 7;
-    if (baseMod > 27) return 8;
-    if (baseMod > 29) return 9;
-    return 10;
+  function getModifier(baseMod: number) {
+    if (baseMod < 12) return 1;
+    if (baseMod < 14) return 2;
+    if (baseMod < 16) return 3;
+    if (baseMod < 18) return 4;
+    if (baseMod < 22) return 5;
+    if (baseMod < 24) return 6;
+    if (baseMod < 26) return 7;
+    if (baseMod < 28) return 8;
+    if (baseMod < 30) return 9;
+    if (baseMod < 32) return 10;
+    return 0;
   }
+
+  $: $totalMeter = getModifier($intScore) + getModifier($wisScore) + 5;
 </script>
 
 <div class="meter-progress">
-  {$currentMeter > $intScore + $wisScore + 5
-    ? "MADNESS"
-    : `${$currentMeter}/${getModifier($intScore) + getModifier($wisScore) + 5}`}
+  {$currentMeter > $totalMeter ? "MADNESS" : `${$currentMeter}/${$totalMeter}`}
 </div>
 <div class="meter-area">
   <Counter text={"-"} increase={false} />
   <div class="meter-outline">
     <div class="meter-body">
-      <div class="meter-body-fill" />
+      <div
+        class="meter-body-fill"
+        style="height: {$currentMeter <= $totalMeter
+          ? ($currentMeter / $totalMeter) * 100
+          : 100}%"
+      />
     </div>
     <div class="meter-base">
       <svg
@@ -88,7 +88,6 @@
   }
 
   .meter-body-fill {
-    height: 20%;
     width: 4.5em;
     background: blue;
     z-index: 1;
